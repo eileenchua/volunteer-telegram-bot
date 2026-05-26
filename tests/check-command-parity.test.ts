@@ -187,17 +187,6 @@ describe("check-command-parity", () => {
       expect(exitSpy).toHaveBeenCalledWith(0);
     });
 
-    // Current behavior - all bot commands are declared without any nesting
-    // it("does not extract indented bot.command calls", async () => {
-    //   mockBotContent =
-    //     "bot.command('start', handler);\n  bot.command('indented', handler);";
-    //   mockWebhookContent = "bot.command('start', handler);";
-
-    //   const { exitSpy } = await loadScript();
-
-    //   expect(exitSpy).toHaveBeenCalledWith(0);
-    // });
-
     it("ignores bot.command calls with an empty command name", async () => {
       const content = "bot.command('', handler);";
       mockBotContent = content;
