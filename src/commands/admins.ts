@@ -426,7 +426,14 @@ export const handleAddVolunteerWizard = async (ctx: Context) => {
       }
       // Set commitments
       await DrizzleDatabaseService.setVolunteerCommitments(v.id, count);
-      const finalVolunteer = { ...v, commitments: count } as any;
+
+      // Fetch volunteer from DB after updating
+      const finalVolunteer = await DrizzleDatabaseService.getVolunteerById(v.id);
+      if (!finalVolunteer) {
+        await ctx.reply('❌ Failed to retrieve volunteer after creation.');
+        addVolunteerState.delete(userId);
+        return;
+      }
       await ctx.reply(
         `✅ <b>Volunteer added successfully!</b>\n\n` +
         formatVolunteerStatus(finalVolunteer),
