@@ -263,7 +263,7 @@ export const listVolunteersCommand = async (ctx: CommandContext<Context>) => {
     probationVolunteers.forEach(volunteer => {
       const safeName = escapeMarkdown(volunteer.name);
       const safeHandle = escapeMarkdown(volunteer.telegram_handle);
-      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments}/3 commitments\n`;
+      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments}/3 commitments (${volunteer.cumulative_commitments} total)\n`;
     });
     message += '\n';
   }
@@ -273,7 +273,7 @@ export const listVolunteersCommand = async (ctx: CommandContext<Context>) => {
     activeVolunteers.forEach(volunteer => {
       const safeName = escapeMarkdown(volunteer.name);
       const safeHandle = escapeMarkdown(volunteer.telegram_handle);
-      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments} commitments\n`;
+      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments} commitments (${volunteer.cumulative_commitments} total)\n`;
     });
     message += '\n';
   }
@@ -283,7 +283,7 @@ export const listVolunteersCommand = async (ctx: CommandContext<Context>) => {
     inactiveVolunteers.forEach(volunteer => {
       const safeName = escapeMarkdown(volunteer.name);
       const safeHandle = escapeMarkdown(volunteer.telegram_handle);
-      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments} commitments\n`;
+      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments} commitments (${volunteer.cumulative_commitments} total)\n`;
     });
     message += '\n';
   }
@@ -293,7 +293,7 @@ export const listVolunteersCommand = async (ctx: CommandContext<Context>) => {
     leadVolunteers.forEach(volunteer => {
       const safeName = escapeMarkdown(volunteer.name);
       const safeHandle = escapeMarkdown(volunteer.telegram_handle);
-      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments} commitments\n`;
+      message += `• ${safeName} (@${safeHandle}) - ${volunteer.commitments} commitments (${volunteer.cumulative_commitments} total)\n`;
     });
   }
 

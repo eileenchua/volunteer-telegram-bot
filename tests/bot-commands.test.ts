@@ -77,6 +77,7 @@ describe('Bot Commands', () => {
         telegram_handle: 'testuser',
         status: 'probation',
         commitments: 0,
+        cumulative_commitments: 0,
         commit_count_start_date: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -106,6 +107,7 @@ describe('Bot Commands', () => {
         telegram_handle: 'testuser',
         status: 'active',
         commitments: 5,
+        cumulative_commitments: 5,
         commit_count_start_date: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -134,6 +136,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'vol1',
           status: 'active',
           commitments: 3,
+          cumulative_commitments: 10,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -144,6 +147,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'vol2',
           status: 'probation',
           commitments: 1,
+          cumulative_commitments: 4,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -157,6 +161,9 @@ describe('Bot Commands', () => {
       expect(DrizzleDatabaseService.isAdmin).toHaveBeenCalledWith('testuser');
       expect(DrizzleDatabaseService.getAllVolunteers).toHaveBeenCalled();
       expect(mockCtx.reply).toHaveBeenCalled();
+      const replyMessage = mockCtx.reply.mock.calls[0][0] as string;
+      expect(replyMessage).toContain('10 total');
+      expect(replyMessage).toContain('4 total');
     });
 
     it('should deny access to non-admin users', async () => {
@@ -190,6 +197,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'testuser',
           status: 'active',
           commitments: 3,
+          cumulative_commitments: 3,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -279,6 +287,7 @@ describe('Bot Commands', () => {
         telegram_handle: 'testuser',
         status: 'active',
         commitments: 2,
+        cumulative_commitments: 2,
         commit_count_start_date: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -376,6 +385,7 @@ describe('Bot Commands', () => {
         telegram_handle: 'testuser',
         status: 'active',
         commitments: 2,
+        cumulative_commitments: 2,
         commit_count_start_date: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -438,6 +448,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'testuser',
           status: 'active',
           commitments: 3,
+          cumulative_commitments: 3,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -494,6 +505,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'testuser',
           status: 'active',
           commitments: 3,
+          cumulative_commitments: 3,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -528,6 +540,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'testuser',
           status: 'active',
           commitments: 3,
+          cumulative_commitments: 3,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
@@ -591,6 +604,7 @@ describe('Bot Commands', () => {
           telegram_handle: 'testuser',
           status: 'active',
           commitments: 3,
+          cumulative_commitments: 3,
           commit_count_start_date: new Date().toISOString(),
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
