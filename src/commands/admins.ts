@@ -510,7 +510,7 @@ export const setCommitCountCommand = async (ctx: CommandContext<Context>) => {
     }
     await ctx.reply(
       `✅ **Commit count updated!**\n\n` +
-      `${safeName} (@${safeHandle}) now has ${count} commitments.` + extra,
+      `${safeName} (@${safeHandle}) now has ${count} commitments for the quarter!` + extra,
       { parse_mode: 'Markdown' }
     );
   } else {
