@@ -365,6 +365,73 @@ describe('Bot Commands', () => {
       expect(message).not.toContain('Completed Task');
     });
 
+    it('should show a guidance note under a task whose template has one', async () => {
+      mockCtx.from = { username: 'testuser' };
+      const { DrizzleDatabaseService } = await import('../src/db-drizzle');
+
+      vi.mocked(DrizzleDatabaseService.getVolunteerByHandle).mockResolvedValue({
+        id: 1,
+        name: 'Test User',
+        telegram_handle: 'testuser',
+        status: 'active',
+        commitments: 2,
+        commit_count_start_date: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+
+      // 'Poster Making' has a guidance note in TASKS; 'Newsletter Announcement' does not
+      vi.mocked(DrizzleDatabaseService.getVolunteerTasks).mockResolvedValue([
+        {
+          id: 1,
+          event_id: 1,
+          title: 'Poster Making',
+          description: 'Create posters for the event',
+          status: 'todo',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        },
+        {
+          id: 2,
+          event_id: 1,
+          title: 'Newsletter Announcement',
+          description: 'Include event in newsletter',
+          status: 'todo',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }
+      ]);
+
+      vi.mocked(DrizzleDatabaseService.getEvent).mockResolvedValue({
+        id: 1,
+        title: 'Test Event 1',
+        date: new Date().toISOString(),
+        format: 'workshop',
+        status: 'planning',
+        venue: 'Test Venue',
+        details: 'Test details',
+        created_by: 1,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+
+      const { myTasksCommand } = await import('../src/commands/volunteers');
+
+      await myTasksCommand(mockCtx);
+
+      const replyCall = mockCtx.reply.mock.calls[0];
+      const message = replyCall[0];
+
+      expect(message).toContain('Poster Making');
+      expect(message).toContain('📌');
+      expect(message).toContain('Guidance');
+      expect(message).toContain('Canva');
+
+      // 'Newsletter Announcement' has no guidance entry — its block should carry no guidance note
+      const newsletterBlock = message.split('Newsletter Announcement')[1];
+      expect(newsletterBlock).not.toContain('📌');
+    });
+
     it('should show message when volunteer has no active tasks', async () => {
       mockCtx.from = { username: 'testuser' };
       const { DrizzleDatabaseService } = await import('../src/db-drizzle');

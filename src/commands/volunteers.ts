@@ -178,7 +178,12 @@ export const myTasksCommand = async (ctx: CommandContext<Context>) => {
       const taskDescription = escapeMarkdown(task.description);
       message += `   Description: ${taskDescription}\n`;
     }
-    
+
+    const template = TASKS.find(t => t.title === task.title);
+    if (template?.guidance) {
+      message += `   📌 Guidance: ${escapeMarkdown(template.guidance)}\n`;
+    }
+
     message += `\n`;
   }
   
